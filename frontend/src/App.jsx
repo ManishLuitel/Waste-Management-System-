@@ -29,8 +29,8 @@ function App() {
         <Route path="/compost-request" element={<CompostRequestForm />} />
         <Route path="/compost-requests" element={<CompostRequestViewer />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/schedule" element={<AdminScheduleManager />} /> */}
+        <Route path="/admin" element={<AdminDashboard />}  />
+        <Route path="/admin/schedules" element={<AdminScheduleManager />} /> 
 
         
         {/* Admin Routes */}

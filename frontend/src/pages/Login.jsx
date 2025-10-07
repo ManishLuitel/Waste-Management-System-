@@ -16,7 +16,7 @@ export default function Login() {
       const res = await axios.post("/api-token-auth/", { username, password });
       localStorage.setItem("token", res.data.token);
       alert("✅ Login successful!");
-      navigate("/AdminDashboard"); // redirect to admin dashboard
+      navigate("/admin"); // redirect to admin dashboard
     } catch (err) {
       setError("❌ Invalid username or password.");
     }

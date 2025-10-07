@@ -65,6 +65,7 @@ export default function AdminDashboard() {
 
       {/* Main Content */}
       <div className="flex-1 p-8 overflow-y-auto">
+        
         <Outlet /> {/* Child admin pages (like schedule, compost, etc.) render here */}
       </div>
     </div>

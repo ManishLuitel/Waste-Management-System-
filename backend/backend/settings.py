@@ -97,12 +97,8 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'waste_management_db',     # ✅ your MySQL DB name
-        'USER': 'MANISH',           # ✅ the username you created
-        'PASSWORD': 'Manish@1234',       # ✅ the password you chose
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

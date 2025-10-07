@@ -8,9 +8,8 @@ from .permissions import IsAdminOrPostOnly
 class ScheduleViewSet(viewsets.ModelViewSet):
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializer
-    # anyone can view schedule, only admin can edit if you want
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAdminUser]
+    authentication_classes = []
+    permission_classes = []
 
 
 class SpecialRequestViewSet(viewsets.ModelViewSet):

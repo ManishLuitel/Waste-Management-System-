@@ -9,7 +9,6 @@ router.register(r'special-request', SpecialRequestViewSet)
 router.register(r'compost-request', CompostRequestViewSet, basename='compost-request')
 
 urlpatterns = [
-  
     path('', include(router.urls)),  # DO NOT manually list paths again here
     path('api-token-auth/', obtain_auth_token),
 ]

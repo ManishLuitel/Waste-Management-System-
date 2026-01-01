@@ -5,6 +5,7 @@ export default function AdminSpecialRequests() {
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
 
+
   const fetchRequests = () => {
     fetch("/api/special-request/", {
       headers: { Authorization: `Token ${token}` },

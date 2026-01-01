@@ -10,12 +10,8 @@ import CompostRequestViewer from './components/CompostRequestViewer'
 import Login from './pages/Login'
 import AdminScheduleManager from "./admin/AdminScheduleManager"
 import AdminDashboard from './admin/AdminDashboard'
-
-
-
-
-
-
+import AdminCompostRequests from "./admin/AdminCompostRequests";
+  
 
 function App() {
   return (
@@ -27,13 +23,14 @@ function App() {
         {/* <Route path="/admin/special-requests" element={<SpecialRequestViewer />} /> */}
         <Route path="/schedule" element={<ScheduleViewer />} />
         <Route path="/compost-request" element={<CompostRequestForm />} />
-        <Route path="/compost-requests" element={<CompostRequestViewer />} />
+        <Route path="/compost-request" element={<CompostRequestViewer />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<AdminDashboard />}  />
         <Route path="/admin/schedules" element={<AdminScheduleManager />} /> 
+        <Route path="/admin/compost-request" element={<AdminCompostRequests />} />
 
-        
-        {/* Admin Routes */}
+
+                {/* Admin Routes */}
         <Route path="/admin" element={<AdminDashboard />}>
           {/* <Route path="schedules" element={<AdminScheduleManager />} /> */}
           <Route path="special-requests" element={<SpecialRequestViewer />} />

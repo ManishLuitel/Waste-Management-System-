@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function SpecialRequestViewer() {
   const [requests, setRequests] = useState([])
   const [loading, setLoading] = useState(true)
-  const navigate = navigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -12,7 +13,7 @@ export default function SpecialRequestViewer() {
       return;
     }
 
-    fetch("/api/special-requests/", {
+    fetch("/api/special-request/", {
       headers: {
         Authorization: `Token ${token}`,
       },

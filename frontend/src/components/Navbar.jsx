@@ -14,8 +14,8 @@ export default function Navbar() {
              <Link to="/special-request" className="hover:text-gray-300 transition px-3 py-1 rounded hover:bg-green-600">Special Request</Link>
              <Link to="/contact" className="hover:text-gray-300 transition px-3 py-1 rounded hover:bg-green-600">Contact</Link>
              <Link to="/compost-request" className="hover:text-gray-300 transition px-3 py-1 rounded hover:bg-green-600">Compost Request</Link>
-             <Link to="/compost-request" className="hover:text-gray-300 transition px-3 py-1 rounded hover:bg-green-600">View Compost</Link>
-           
+             {/* <Link to="/compost-request" className="hover:text-gray-300 transition px-3 py-1 rounded hover:bg-green-600">View Compost</Link>
+            */}
            </div>
            <button className="sm:hidden text-xl">☰</button>
          </nav>

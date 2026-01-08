@@ -3,30 +3,42 @@ import { Calendar, MapPin, Clock, Trash2 } from "lucide-react";
 
 export default function ScheduleViewer() {
   const [schedule, setSchedule] = useState([]);
+  const [wards, setWards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedWard, setSelectedWard] = useState("all");
   const [selectedDay, setSelectedDay] = useState("all");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/schedule/")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Server error: ${res.status}`);
+    // Fetch both schedule and wards data
+    Promise.all([
+      fetch("http://127.0.0.1:8000/api/schedule/"),
+      fetch("http://127.0.0.1:8000/api/wards/")
+    ])
+      .then(([scheduleRes, wardsRes]) => {
+        if (!scheduleRes.ok || !wardsRes.ok) {
+          throw new Error(`Server error`);
         }
-        return res.json();
+        return Promise.all([scheduleRes.json(), wardsRes.json()]);
       })
-      .then((data) => {
-        console.log("✅ Fetched schedule:", data);
-        setSchedule(Array.isArray(data) ? data : []);
+      .then(([scheduleData, wardsData]) => {
+        console.log("✅ Fetched schedule:", scheduleData);
+        console.log("✅ Fetched wards:", wardsData);
+        setSchedule(Array.isArray(scheduleData) ? scheduleData : []);
+        setWards(Array.isArray(wardsData) ? wardsData : []);
         setLoading(false);
       })
       .catch((err) => {
-        console.error("❌ Failed to fetch schedule:", err);
+        console.error("❌ Failed to fetch data:", err);
         setError("Unable to load schedule. Please try again later.");
         setLoading(false);
       });
   }, []);
+
+  const getWardName = (wardNumber) => {
+    const ward = wards.find(w => w.ward_number === wardNumber);
+    return ward ? ward.name : `Ward ${wardNumber}`;
+  };
 
   const getWasteTypeColor = (type) => {
     const colors = {
@@ -130,7 +142,10 @@ export default function ScheduleViewer() {
                       <div className="bg-green-100 p-2 rounded-lg">
                         <MapPin className="h-5 w-5 text-green-600" />
                       </div>
-                      <h3 className="font-semibold text-gray-900">Ward {item.ward}</h3>
+                      <div>
+                        <h3 className="font-semibold text-gray-900">Ward {item.ward}</h3>
+                        <p className="text-xs text-gray-500">{getWardName(item.ward)}</p>
+                      </div>
                     </div>
                     <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getWasteTypeColor(item.waste_type)}`}>
                       {item.waste_type}

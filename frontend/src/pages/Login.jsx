@@ -22,7 +22,7 @@ export default function Login() {
     setSuccess("");
 
     try {
-      const res = await axios.post("/api-token-auth/", { username, password });
+      const res = await axios.post("/api/auth/adminlogin/", { username, password });
       localStorage.setItem("adminToken", res.data.token);
       setSuccess("Login successful! Redirecting...");
       setTimeout(() => navigate("/admin"), 1500);

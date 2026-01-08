@@ -1,13 +1,23 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from .models import PasswordResetRequest
 
 class UserSignupSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=6)
     
-
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
+
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("A user with this email already exists.")
+        return value
+
+    def validate_username(self, value):
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError("A user with this username already exists.")
+        return value
 
     def create(self, validated_data):
         user = User.objects.create_user(
@@ -16,3 +26,11 @@ class UserSignupSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+
+class PasswordResetRequestSerializer(serializers.ModelSerializer):
+    user_email = serializers.CharField(source='user.email', read_only=True)
+    
+    class Meta:
+        model = PasswordResetRequest
+        fields = ['id', 'user_email', 'status', 'temporary_password', 'created_at', 'approved_at']
+        read_only_fields = ['id', 'created_at', 'approved_at']

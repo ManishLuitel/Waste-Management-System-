@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { User, Truck, Leaf, List, LogOut, Home, Calendar, CreditCard, History, TrendingUp, FileText } from "lucide-react";
+import { User, Truck, Leaf, List, LogOut, Home, Calendar, CreditCard, History, TrendingUp, FileText, ArrowLeft } from "lucide-react";
 
 export default function UserDashboard() {
   const navigate = useNavigate();
@@ -79,8 +79,21 @@ export default function UserDashboard() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-8 overflow-y-auto">
-        <Outlet />
+      <div className="flex-1 overflow-y-auto">
+        {/* Top bar with back arrow */}
+        <div className="bg-white shadow-sm border-b border-gray-200 px-8 py-4">
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            <span>Back to Landing Page</span>
+          </button>
+        </div>
+        
+        <div className="p-8">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

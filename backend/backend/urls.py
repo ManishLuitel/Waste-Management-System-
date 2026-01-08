@@ -6,4 +6,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('waste.urls')), 
     path('api-token-auth/', drf_views.obtain_auth_token), # <- New
+    path('api/auth/', include('accounts.urls')),
+
+   
 ]

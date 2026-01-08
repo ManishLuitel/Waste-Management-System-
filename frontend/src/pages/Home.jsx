@@ -159,6 +159,70 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Gallery Section */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">Our Work in Action</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              See how we're making a difference in Banepa's waste management
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                img: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=500&q=80",
+                title: "Community Clean-up Drive",
+                desc: "Monthly community participation in waste collection"
+              },
+              {
+                img: "https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?auto=format&fit=crop&w=500&q=80",
+                title: "Recycling Center",
+                desc: "State-of-the-art sorting and recycling facility"
+              },
+              {
+                img: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=500&q=80",
+                title: "Composting Program",
+                desc: "Converting organic waste into valuable compost"
+              },
+              {
+                img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=500&q=80",
+                title: "Collection Trucks",
+                desc: "Modern fleet ensuring efficient waste pickup"
+              },
+              {
+                img: "https://images.unsplash.com/photo-1569163139394-de4e4f43e4e5?auto=format&fit=crop&w=500&q=80",
+                title: "Educational Programs",
+                desc: "Teaching proper waste segregation to students"
+              },
+              {
+                img: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=500&q=80",
+                title: "Green Initiatives",
+                desc: "Promoting sustainable practices in the community"
+              }
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <img 
+                  src={item.img} 
+                  alt={item.title}
+                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold mb-2">{item.title}</h3>
+                  <p className="text-sm text-gray-200">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 px-6 bg-gradient-to-r from-green-600 to-green-800 text-white">
         <div className="max-w-4xl mx-auto text-center animate-fade-in">

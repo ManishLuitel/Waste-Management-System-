@@ -24,7 +24,8 @@ export default function UserLogin() {
     }
 
     localStorage.setItem("token", data.token);
-    navigate("/");
+    localStorage.setItem("userEmail", email);
+    navigate("/user-dashboard");
   };
 
   return (
@@ -58,6 +59,12 @@ export default function UserLogin() {
         <button className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
           Login
         </button>
+
+        <div className="mt-4 text-center">
+          <Link to="/user-forgot-password" className="text-green-600 hover:text-green-800 text-sm">
+            Forgot your password?
+          </Link>
+        </div>
 
         <p className="mt-4 text-center text-sm">
           Don’t have an account?{" "}

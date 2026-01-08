@@ -7,6 +7,8 @@ export default function Signup() {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const navigate = useNavigate();
 
@@ -15,21 +17,45 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
 
-    const res = await fetch("http://localhost:8000/api/auth/signup/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.error || "Signup failed");
+    // Password validation
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.{8,})/;
+    if (!passwordRegex.test(form.password)) {
+      setError("Password must be at least 8 characters long, contain one uppercase letter and one special character");
       return;
     }
 
-    navigate("/userlogin");
+    try {
+      const res = await fetch("http://localhost:8000/api/auth/signup/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        // Handle validation errors
+        if (data.username) {
+          setError(`Username error: ${data.username[0]}`);
+        } else if (data.email) {
+          setError(`Email error: ${data.email[0]}`);
+        } else if (data.password) {
+          setError(`Password error: ${data.password[0]}`);
+        } else {
+          setError(data.error || "Signup failed");
+        }
+        return;
+      }
+
+      setSuccess("Signup successful! Redirecting to login...");
+      setTimeout(() => navigate("/userlogin"), 2000);
+    } catch (error) {
+      console.error("Signup error:", error);
+      setError("Network error. Please try again.");
+    }
   };
 
   return (
@@ -41,6 +67,18 @@ export default function Signup() {
         <h2 className="text-2xl font-bold text-green-700 mb-6 text-center">
           Create Account
         </h2>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+            {error}
+          </div>
+        )}
+
+        {success && (
+          <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
+            {success}
+          </div>
+        )}
 
         <input
           name="username"
@@ -62,7 +100,7 @@ export default function Signup() {
         <input
           name="password"
           type="password"
-          placeholder="Password"
+          placeholder="Password (8+ chars, 1 uppercase, 1 special)"
           onChange={handleChange}
           className="w-full mb-4 p-3 border rounded"
           required

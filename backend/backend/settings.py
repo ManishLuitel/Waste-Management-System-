@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5ez^_ud3ou)u-xpxa_*%ifex3_wkc5s@v3_(*zwu6q(lm%u+9!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -43,19 +43,21 @@ INSTALLED_APPS = [
     'corsheaders',
     'waste',
     'accounts',
+    'payments',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'accounts.authentication.ExpiringTokenAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
-     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ]
 }
+
+# Token expiry time (4 hours)
+from datetime import timedelta
+TOKEN_EXPIRED_AFTER_SECONDS = 4 * 60 * 60  # 4 hours in seconds
 
 
 MIDDLEWARE = [
@@ -98,12 +100,8 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'waste_management_db',     # ✅ your MySQL DB name
-        'USER': 'MANISH',           # ✅ the username you created
-        'PASSWORD': 'Manish@1234',       # ✅ the password you chose
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

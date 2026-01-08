@@ -164,7 +164,9 @@ class UserLoginView(APIView):
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
-        token, _ = Token.objects.get_or_create(user=user)
+        # Delete existing token and create new one
+        Token.objects.filter(user=user).delete()
+        token = Token.objects.create(user=user)
 
         return Response({
             "message": "Login successful",
@@ -175,3 +177,24 @@ class UserLoginView(APIView):
                 "email": user.email,
             }
         })
+
+class AdminLoginView(APIView):
+    permission_classes = []
+
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        user = authenticate(username=username, password=password)
+
+        if not user:
+            return Response(
+                {"error": "Invalid credentials"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        # Delete existing token and create new one
+        Token.objects.filter(user=user).delete()
+        token = Token.objects.create(user=user)
+
+        return Response({"token": token.key})
